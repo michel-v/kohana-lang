@@ -42,6 +42,11 @@ class Request extends Kohana_Request {
 			// Use the default server protocol
 			$protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
 
+			// If there was a query string, add it to the redirect uri
+			if ($_GET) {
+				$uri .= URL::query($_GET); 
+			}
+
 			// Redirect to the same URI, but with language prepended
 			header($protocol.' 302 Found');
 			header('Location: '.URL::base(TRUE, TRUE).$lang.'/'.$uri);
